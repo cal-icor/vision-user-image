@@ -189,7 +189,7 @@ Keep the choice for `base` in the GitHub PR user interface, while the choice
 for `head` is your fork.
 
 Once this is complete and if there are no problems, a GitHub action will
-automatically [build and test](https://github.com/cal-icor/base-user-image/blob/main/.github/workflows/build-test-image.yaml)
+automatically [build and test](https://github.com/cal-icor/vision-user-image/blob/main/.github/workflows/build-test-image.yaml)
 the image.  If this fails, please check the output of the workflow in the
 action, and make any changes required to get the build to pass.
 
@@ -197,7 +197,7 @@ action, and make any changes required to get the build to pass.
 
 Once the image build has completed successfully, you can request that
 someone review the PR before merging, or you can merge yourself if you are
-confident. This merge will trigger a [second giuthub workflow](https://github.com/cal-icor/base-user-image/blob/main/.github/workflows/build-push-create-pr.yaml)
+confident. This merge will trigger a [second giuthub workflow](https://github.com/cal-icor/vision-user-image/blob/main/.github/workflows/build-push-create-pr.yaml)
 that builds the image again, pushes it to the appropriate location in our
 Google Artifact Registry and finally creates a pull request in the
 [Cal-ICOR Jupyterhub repo](https://github.com/cal-icor/cal-icor-hubs). This pull request

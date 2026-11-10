@@ -59,10 +59,12 @@ liboss4-salsa-asound2
 dnsutils
 net-tools
 
-libgdal-dev
-gdal-bin
-libgeos-dev
-libproj-dev
 libsqlite3-dev
 libssl-dev
-libudunits2-dev
+
+# open3d loads libGL/libgomp at import time even when only doing headless geometry work
+libgl1
+libgomp1
+libx11-6
+libxext6
+libxrender1
