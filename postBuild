@@ -13,6 +13,18 @@ git config --system pull.rebase false
 mkdir -p ${NB_PYTHON_PREFIX}/share/jupyter/lab/settings
 cp -p overrides.json ${NB_PYTHON_PREFIX}/share/jupyter/lab/settings
 
+# dash, a hard dependency of open3d, ships its labextension as source rather than
+# as a prebuilt labextension, so JupyterLab offers to build it on every startup.
+# The build cannot succeed -- there is no Node in this image -- and would be lost
+# on restart if it did, so turn the check off. labapp.py applies page_config.json
+# before its own setdefault() calls, so these win.
+cat > ${NB_PYTHON_PREFIX}/share/jupyter/lab/settings/page_config.json <<'JSON'
+{
+  "buildAvailable": false,
+  "buildCheck": false
+}
+JSON
+
 # code-server's conda package assets are installed in share/code-server.
 export VSCODE_EXTENSIONS=${CONDA_DIR}/envs/notebook/share/code-server/extensions
 mkdir -p ${VSCODE_EXTENSIONS}
