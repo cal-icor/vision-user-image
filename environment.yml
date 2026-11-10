@@ -1,4 +1,4 @@
-name: base-user-image
+name: vision-user-image
 # This is the standard conda configuration file. Use this file to list
 # the conda packages that you need installed in your environment.
 channels:
@@ -13,6 +13,7 @@ dependencies:
   - git==2.54.0
   - ipykernel==7.3.0
   - ipython==9.15.0
+  - ipywidgets==8.1.9
   - jupyter-resource-usage=1.2.1
   # pinned to match the deployed hub image's jupyterhub version
   #- jupyterhub==5.5.1
@@ -29,12 +30,6 @@ dependencies:
   - regex==2026.5.9
   - sqlite==3.53.2
 
-  # r2d installs jupyter-rsession-proxy, but in the base python env, not in the updated one
-  - jupyter-rsession-proxy==2.5.1
-
-  # C++ kernel for Jupyter (registers xcpp11/xcpp14/xcpp17 kernels)
-  - xeus-cling==0.15.3
-
   # vscode
   - code-server==4.124.2
   - brotli-python>=1.2.1  # CVE-2026-111497
@@ -45,8 +40,6 @@ dependencies:
   - datascience==0.18.1
   - matplotlib==3.11.0
   - numpy==2.4.6
-  - geopandas==1.1.3
-  - geopy==2.4.1
   - h5py==3.16.0
   - openpyxl==3.1.5
   - pandas==3.0.3
@@ -60,11 +53,22 @@ dependencies:
   - statsmodels==0.14.6
   - sympy==1.14.0
 
-  # nlp
+  # 2d image processing / computer vision
+  - opencv=4.13.0=headless*
+  - scikit-image==0.26.0
+  - imageio==2.38.1
+  - pillow==13.0.0
+
+  # pretrained vision models (depth estimation, DINO-style features)
   - safetensors==0.8.0
-  - tiktoken==0.14.0
   - tokenizers==0.23.1
   - transformers==5.17.0
+
+  # 3d geometry
+  - trimesh==5.2.0
+  - rtree==1.3.0
+  - networkx==3.7
+  - shapely==2.1.2
 
   # pip installed packages, conda is preferred
   - pip:
@@ -74,12 +78,17 @@ dependencies:
     - pip-tree==5.0.0
     - pipdeptree==3.1.0
 
-    # r2d installs jupyter-shiny-proxy, but in the base python env, not in the updated one
-    - jupyter-shiny-proxy==1.4
     - jupysql==0.11.1
     - nbconvert[webpdf]==7.17.1
     - otter-grader==7.0.0
-    - pyscf==2.14.0
 
     # nbgitpuller pre-release
     - nbgitpuller==1.3.0
+
+    # open3d-cpu is the CPU-only build of open3d; same import name and API as
+    # open3d, 105MB instead of 400MB because it omits the bundled CUDA libraries
+    - open3d-cpu==0.20.0
+
+    # conda-forge has pycolmap too, with CUDA builds, but it skips python 3.13
+    # and wants libsqlite >=3.54; the wheel is the CPU build either way
+    - pycolmap==4.2.1
